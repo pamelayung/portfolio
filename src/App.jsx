@@ -73,7 +73,7 @@ export default function PamelaPortfolio() {
           <div className="grid gap-10 md:grid-cols-[1.3fr_0.7fr] md:items-center">
             <div>
               <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
-                Pamela Young
+                Pamela Yung
               </p>
               <h1 className="max-w-3xl text-4xl font-semibold leading-tight md:text-6xl">
                 Robotics, machine learning, data, and product-minded problem solving.
