@@ -129,7 +129,7 @@ export default function PamelaPortfolioGame() {
                   onClick={() => setGalleryIndex(idx)}
                   className={`rounded-2xl border p-4 text-left transition ${
                     galleryIndex === idx
-                      ? 'border-slate-900 bg-slate-900 text-white'
+                      ? 'border-slate-900 bg-slate-600 text-white'
                       : 'border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100'
                   }`}
                 >
@@ -223,7 +223,7 @@ export default function PamelaPortfolioGame() {
 
   return (
     <div className="min-h-screen bg-slate-950 text-white">
-      <div className="mx-auto max-w-7xl px-4 py-6 md:px-6">
+      <div className="w-full px-4 py-6 md:px-6">
         <div className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 backdrop-blur">
           <div>
             <p className="text-xs uppercase tracking-[0.25em] text-sky-200/70">Interactive Portfolio Game</p>
@@ -232,20 +232,20 @@ export default function PamelaPortfolioGame() {
           <div className="flex flex-wrap gap-2">
             <button
               onClick={() => setPlayerX(140)}
-              className="rounded-xl border border-white/15 bg-white/5 px-3 py-2 text-sm hover:bg-white/10"
+              className="rounded-xl border border-white/30 bg-white/20 px-4 py-2 text-sm font-medium text-white hover:bg-white/30"
             >
               Restart
             </button>
             <button
               onClick={() => setShowOverlay((prev) => !prev)}
-              className="rounded-xl border border-white/15 bg-white/5 px-3 py-2 text-sm hover:bg-white/10"
+              className="rounded-xl border border-white/30 bg-white/20 px-4 py-2 text-sm font-medium text-white hover:bg-white/30"
             >
               {showOverlay ? 'Hide Panel' : 'Show Panel'}
             </button>
           </div>
         </div>
 
-        <div className="grid gap-6 xl:grid-cols-[1.3fr_0.7fr]">
+        <div className="grid min-h-[calc(100vh-120px)] gap-6 xl:grid-cols-[1.45fr_0.55fr]">
           <div className="overflow-hidden rounded-3xl border border-white/10 bg-slate-900 shadow-2xl shadow-black/30">
             <div className="border-b border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-200">
               Use ← → or A / D to move through the world.
@@ -315,7 +315,7 @@ export default function PamelaPortfolioGame() {
 
           <div className="space-y-4">
             <div className="rounded-3xl border border-white/10 bg-white p-6 text-slate-900 shadow-xl shadow-black/20">
-              <p className="text-xs uppercase tracking-[0.25em] text-slate-500">Current Room</p>
+              <p className="text-xs uppercase tracking-[0.25em] text-slate-700">Current Room</p>
               <h2 className="mt-2 text-3xl font-semibold">{currentZone.title}</h2>
               <p className="mt-3 leading-8 text-slate-600">{currentZone.summary}</p>
             </div>
@@ -323,7 +323,7 @@ export default function PamelaPortfolioGame() {
             {showOverlay && (
               <div className="rounded-3xl border border-white/10 bg-white p-6 text-slate-900 shadow-xl shadow-black/20">
                 <div className="mb-4 flex items-center justify-between gap-3">
-                  <p className="text-xs uppercase tracking-[0.25em] text-slate-500">Room Details</p>
+                  <p className="text-xs uppercase tracking-[0.25em] text-slate-700">Room Details</p>
                   <div className="flex flex-wrap gap-2">
                     {zones.map((zone) => (
                       <button
@@ -334,8 +334,8 @@ export default function PamelaPortfolioGame() {
                         }}
                         className={`rounded-full px-3 py-1 text-xs font-medium transition ${
                           zone.id === activeZone
-                            ? 'bg-slate-900 text-white'
-                            : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                            ? 'bg-slate-600 text-white'
+                            : 'bg-slate-200 text-slate-900 hover:bg-slate-300'
                         }`}
                       >
                         {zone.id}
