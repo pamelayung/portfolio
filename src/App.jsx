@@ -332,10 +332,9 @@ export default function PamelaPortfolioGame() {
                           setPlayerX(zone.x1 + 120)
                           setShowOverlay(true)
                         }}
-                        
                         className={`rounded-full px-3 py-1 text-xs font-medium transition ${
                           zone.id === activeZone
-                            ? 'bbg-slate-900 text-white'
+                            ? 'bg-slate-900 text-white'
                             : 'bg-slate-200 text-black hover:bg-slate-300'
                         }`}
                       >
