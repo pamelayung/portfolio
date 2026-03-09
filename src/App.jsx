@@ -1,342 +1,274 @@
-import { useMemo, useState } from 'react'
-
 export default function PamelaPortfolio() {
-  const [activeSection, setActiveSection] = useState('help')
-  const [history, setHistory] = useState([
-    'visitor@pam-terminal:~$ help',
-    'Available commands: about, leadership, projects, experience, resume, contact, github, linkedin, clear',
-  ])
-  const [input, setInput] = useState('')
+  const featuredProjects = [
+    {
+      title: "Triton Robotics at UC San Diego",
+      subtitle: "President · Systems, sponsorship, and large-scale technical leadership",
+      description:
+        "Leading a 50+ member collegiate robotics team, organizing cross-functional subteams, driving sponsorship strategy, and helping host major competitive robotics events and outreach initiatives.",
+      tags: ["Robotics", "Leadership", "Operations", "Sponsorships"],
+      links: [
+        { label: "Add GitHub Link", href: "#" },
+        { label: "Add Photos", href: "#" },
+      ],
+    },
+    {
+      title: "C3 Sherlock Project",
+      subtitle: "Data systems + investigative analysis",
+      description:
+        "Worked on structured data and dashboard-oriented analysis related to organized retail theft, connecting fragmented records into more usable insights for investigative workflows.",
+      tags: ["Data Analysis", "Dashboards", "Public Sector", "Problem Solving"],
+      links: [
+        { label: "Add Project Writeup", href: "#" },
+        { label: "Add GitHub Link", href: "#" },
+      ],
+    },
+    {
+      title: "Machine Learning + Cognitive Science Projects",
+      subtitle: "Modeling, experimentation, and applied ML",
+      description:
+        "Coursework and research-driven projects spanning supervised learning, neural methods, time-series modeling, computer vision, and experimental analysis in cognitive science and machine learning.",
+      tags: ["Machine Learning", "Research", "PyTorch", "Data Science"],
+      links: [
+        { label: "Add GitHub Link", href: "#" },
+        { label: "Add Report / Slides", href: "#" },
+      ],
+    },
+    {
+      title: "Django Product Catalog Web App",
+      subtitle: "Full-stack class project",
+      description:
+        "Built a Django web application with a database-backed item catalog, form validation, routing, templates, debugging workflow, and Bootstrap-based UI refinement.",
+      tags: ["Django", "Python", "Web Dev", "SQLite"],
+      links: [
+        { label: "Add GitHub Repo", href: "#" },
+        { label: "Add Screenshots", href: "#" },
+      ],
+    },
+  ];
 
-  const sections = useMemo(
-    () => ({
-      help: {
-        title: 'help',
-        body: (
-          <div className="space-y-4">
-            <p>
-              Welcome to Pamela Yung’s terminal portfolio. Use the buttons on the left or type commands below to explore.
-            </p>
-            <div className="grid gap-3 md:grid-cols-2">
-              {[
-                'about',
-                'leadership',
-                'projects',
-                'experience',
-                'resume',
-                'contact',
-                'github',
-                'linkedin',
-              ].map((cmd) => (
-                <button
-                  key={cmd}
-                  onClick={() => handleCommand(cmd)}
-                  className="rounded-xl border border-emerald-500/30 bg-black/30 px-4 py-3 text-left text-emerald-300 transition hover:border-emerald-400 hover:bg-emerald-500/10"
-                >
-                  <span className="text-emerald-500">$</span> {cmd}
-                </button>
-              ))}
-            </div>
-          </div>
-        ),
-      },
-      about: {
-        title: 'about',
-        body: (
-          <div className="space-y-4">
-            <p>
-              Hi, I’m <span className="font-semibold text-white">Pamela Yung</span>, a UC San Diego student studying Cognitive Science with a Machine Learning specialization.
-            </p>
-            <p>
-              I like building at the intersection of robotics, machine learning, data, and product-minded problem solving. A lot of my work sits between technical execution and cross-functional leadership.
-            </p>
-            <p>
-              I’m especially interested in turning messy systems into something more usable, scalable, and actionable.
-            </p>
-          </div>
-        ),
-      },
-      leadership: {
-        title: 'leadership',
-        body: (
-          <div className="space-y-4">
-            <div className="rounded-xl border border-emerald-500/20 bg-black/30 p-4">
-              <p className="font-semibold text-white">President, Triton Robotics</p>
-              <ul className="mt-3 space-y-2 text-emerald-100/90">
-                <li>• Lead a 50+ member collegiate robotics team across technical and business functions.</li>
-                <li>• Coordinate large-scale planning, recruitment, sponsorship, and outreach efforts.</li>
-                <li>• Help organize high-visibility robotics competitions, scrimmages, and mentorship initiatives.</li>
-              </ul>
-            </div>
-          </div>
-        ),
-      },
-      projects: {
-        title: 'projects',
-        body: (
-          <div className="space-y-4">
-            {[
-              {
-                name: 'Django Product Catalog Web App',
-                desc: 'Built a database-backed Django app with routing, forms, validation, templates, and Bootstrap UI refinement.',
-              },
-              {
-                name: 'C3 Sherlock Project',
-                desc: 'Worked on data workflows and dashboard-oriented analysis related to organized retail theft and investigative support.',
-              },
-              {
-                name: 'Machine Learning + Cognitive Science Projects',
-                desc: 'Built coursework and research projects spanning supervised learning, time-series modeling, and applied ML experimentation.',
-              },
-              {
-                name: 'Triton Robotics Systems + Operations',
-                desc: 'Managed technical coordination, sponsorship strategy, and team operations for competitive robotics initiatives.',
-              },
-            ].map((project) => (
-              <div key={project.name} className="rounded-xl border border-emerald-500/20 bg-black/30 p-4">
-                <p className="font-semibold text-white">{project.name}</p>
-                <p className="mt-2 text-emerald-100/90">{project.desc}</p>
-              </div>
-            ))}
-          </div>
-        ),
-      },
-      experience: {
-        title: 'experience',
-        body: (
-          <div className="space-y-4">
-            {[
-              'UC San Diego Health – Financial and analytics-related work in healthcare operations',
-              'San Mateo County Sheriff’s Office – Data-oriented work supporting the C3 Sherlock project',
-              'Triton Robotics – Technical leadership, operations, sponsorships, and team development',
-              'Research and coursework – ML, cognitive science, and experimentation-driven technical work',
-            ].map((item) => (
-              <div key={item} className="rounded-xl border border-emerald-500/20 bg-black/30 p-4 text-emerald-100/90">
-                {item}
-              </div>
-            ))}
-          </div>
-        ),
-      },
-      resume: {
-        title: 'resume',
-        body: (
-          <div className="space-y-4">
-            <p>Open or download the latest resume below.</p>
-            <div className="flex flex-wrap gap-3">
-              <a
-                href="/portfolio/pamela_yung_resume.pdf"
-                target="_blank"
-                rel="noreferrer"
-                className="rounded-xl border border-emerald-400 bg-emerald-500/10 px-4 py-3 text-emerald-200 transition hover:bg-emerald-500/20"
-              >
-                view resume
-              </a>
-              <a
-                href="/portfolio/pamela_yung_resume.pdf"
-                download
-                className="rounded-xl border border-emerald-400 bg-emerald-500/10 px-4 py-3 text-emerald-200 transition hover:bg-emerald-500/20"
-              >
-                download resume
-              </a>
-            </div>
-          </div>
-        ),
-      },
-      contact: {
-        title: 'contact',
-        body: (
-          <div className="space-y-4">
-            <p>
-              Reach out through email, LinkedIn, or GitHub.
-            </p>
-            <div className="space-y-2">
-              <p>
-                email: <a className="text-emerald-300 underline" href="mailto:your-email@example.com">your-email@example.com</a>
-              </p>
-              <p>
-                linkedin: <a className="text-emerald-300 underline" href="https://www.linkedin.com/in/pamela-yung124/" target="_blank" rel="noreferrer">pamela-yung124</a>
-              </p>
-              <p>
-                github: <a className="text-emerald-300 underline" href="https://github.com/pamelayung" target="_blank" rel="noreferrer">pamelayung</a>
-              </p>
-            </div>
-          </div>
-        ),
-      },
-      github: {
-        title: 'github',
-        body: (
-          <div className="space-y-3">
-            <p>Open GitHub profile:</p>
-            <a
-              href="https://github.com/pamelayung"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-block rounded-xl border border-emerald-400 bg-emerald-500/10 px-4 py-3 text-emerald-200"
-            >
-              github.com/pamelayung
-            </a>
-          </div>
-        ),
-      },
-      linkedin: {
-        title: 'linkedin',
-        body: (
-          <div className="space-y-3">
-            <p>Open LinkedIn profile:</p>
-            <a
-              href="https://www.linkedin.com/in/pamela-yung124/"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-block rounded-xl border border-emerald-400 bg-emerald-500/10 px-4 py-3 text-emerald-200"
-            >
-              linkedin.com/in/pamela-yung124
-            </a>
-          </div>
-        ),
-      },
-    }),
-    []
-  )
+  const leadership = [
+    "President, Triton Robotics",
+    "Cross-functional team management across technical and business functions",
+    "Sponsorship outreach, partnership building, and event coordination",
+    "Mentorship and community-building through engineering leadership",
+  ];
 
-  function handleCommand(raw) {
-    const command = raw.trim().toLowerCase()
-    if (!command) return
-
-    if (command === 'clear') {
-      setHistory([])
-      setActiveSection('help')
-      setInput('')
-      return
-    }
-
-    setHistory((prev) => [...prev, `visitor@pam-terminal:~$ ${command}`])
-
-    if (sections[command]) {
-      setActiveSection(command)
-      setHistory((prev) => [...prev, `Opened ${command}`])
-    } else {
-      setHistory((prev) => [
-        ...prev,
-        `${command}: command not found`,
-        'Try: help, about, leadership, projects, experience, resume, contact, github, linkedin, clear',
-      ])
-    }
-
-    setInput('')
-  }
+  const skills = [
+    "Python",
+    "Django",
+    "PyTorch",
+    "Data Analysis",
+    "Machine Learning",
+    "SQL",
+    "Git/GitHub",
+    "Product Thinking",
+    "Research",
+    "Operations",
+  ];
 
   return (
-    <div className="min-h-screen bg-[#07110b] px-4 py-8 text-emerald-100 md:px-8">
-      <div className="mx-auto max-w-7xl overflow-hidden rounded-3xl border border-emerald-500/20 bg-[#0b1510] shadow-2xl shadow-black/40">
-        <div className="flex items-center gap-2 border-b border-emerald-500/15 bg-black/30 px-5 py-4">
-          <span className="h-3 w-3 rounded-full bg-red-400" />
-          <span className="h-3 w-3 rounded-full bg-yellow-400" />
-          <span className="h-3 w-3 rounded-full bg-green-400" />
-          <div className="ml-4 text-sm text-emerald-300/80">pamela-yung-terminal-portfolio</div>
-        </div>
-
-        <div className="grid min-h-[85vh] lg:grid-cols-[290px_1fr]">
-          <aside className="border-b border-emerald-500/15 bg-black/20 p-5 lg:border-b-0 lg:border-r">
-            <div className="mb-6">
-              <p className="text-xs uppercase tracking-[0.25em] text-emerald-400/70">user</p>
-              <h1 className="mt-2 text-2xl font-semibold text-white">Pamela Yung</h1>
-              <p className="mt-2 text-sm leading-6 text-emerald-100/80">
-                Robotics, machine learning, data, and product-minded problem solving.
+    <div className="min-h-screen bg-gray-100 text-gray-900">
+      <section className="border-b border-slate-200 bg-white">
+        <div className="mx-auto max-w-6xl px-6 py-16 md:py-24">
+          <div className="grid gap-10 md:grid-cols-[1.3fr_0.7fr] md:items-center">
+            <div>
+              <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
+                Pamela Yung
               </p>
-            </div>
-
-            <div className="space-y-2">
-              {['help', 'about', 'leadership', 'projects', 'experience', 'resume', 'contact'].map((item) => (
-                <button
-                  key={item}
-                  onClick={() => handleCommand(item)}
-                  className={`w-full rounded-xl px-4 py-3 text-left text-sm transition ${
-                    activeSection === item
-                      ? 'bg-emerald-500/15 text-white ring-1 ring-emerald-400/40'
-                      : 'bg-black/20 text-emerald-200 hover:bg-emerald-500/10'
-                  }`}
+              <h1 className="max-w-3xl text-4xl font-semibold leading-tight md:text-6xl">
+                Robotics, machine learning, data, and product-minded problem solving.
+              </h1>
+              <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600">
+                I’m a UC San Diego student studying Cognitive Science with a Machine Learning specialization, building at the intersection of technical systems, data-driven decision making, and collaborative leadership.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <a
+                  href="#projects"
+                  className="rounded-2xl bg-slate-900 px-5 py-3 text-sm font-medium text-white shadow-sm transition hover:-translate-y-0.5"
                 >
-                  <span className="text-emerald-500">&gt;</span> {item}
-                </button>
-              ))}
-            </div>
-
-            <div className="mt-8 rounded-2xl border border-emerald-500/20 bg-black/30 p-4 text-sm text-emerald-100/80">
-              <p className="text-emerald-400">quick links</p>
-              <div className="mt-3 space-y-2">
-                <a className="block hover:text-white" href="https://github.com/pamelayung" target="_blank" rel="noreferrer">
-                  github
+                  View Projects
                 </a>
-                <a className="block hover:text-white" href="https://www.linkedin.com/in/pamela-yung124/" target="_blank" rel="noreferrer">
-                  linkedin
+                <a
+                  href="#contact"
+                  className="rounded-2xl border border-slate-300 bg-white px-5 py-3 text-sm font-medium text-slate-700 transition hover:-translate-y-0.5"
+                >
+                  Contact
                 </a>
-                <a className="block hover:text-white" href="/portfolio/pamela_yung_resume.pdf" target="_blank" rel="noreferrer">
-                  resume.pdf
+                <a
+                  href="#resume"
+                  className="rounded-2xl border border-slate-300 bg-white px-5 py-3 text-sm font-medium text-slate-700 transition hover:-translate-y-0.5"
+                >
+                  Resume
                 </a>
               </div>
             </div>
-          </aside>
 
-          <main className="flex flex-col">
-            <div className="border-b border-emerald-500/15 px-5 py-4 font-mono text-sm text-emerald-300/80">
-              visitor@pam-terminal:~$ open {activeSection}
+            <div className="rounded-3xl border border-slate-200 bg-gradient-to-br from-slate-100 to-white p-6 shadow-sm">
+              <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-8 text-center">
+                <div className="mx-auto flex h-28 w-28 items-center justify-center rounded-full bg-slate-100 text-sm font-medium text-slate-500">
+                  Add Photo
+                </div>
+                <p className="mt-4 text-sm text-slate-500">
+                  Replace this with a headshot, robotics photo, or project image.
+                </p>
+              </div>
             </div>
-
-            <div className="grid flex-1 gap-0 xl:grid-cols-[1.2fr_0.8fr]">
-              <section className="border-b border-emerald-500/15 p-5 xl:border-b-0 xl:border-r">
-                <div className="mb-5 font-mono text-sm text-emerald-400">
-                  ./sections/{sections[activeSection]?.title || 'help'}.md
-                </div>
-                <div className="rounded-2xl border border-emerald-500/20 bg-black/30 p-6 leading-8 text-emerald-100/90">
-                  {sections[activeSection]?.body}
-                </div>
-              </section>
-
-              <section className="flex flex-col p-5">
-                <div className="mb-4 font-mono text-sm text-emerald-400">command history</div>
-                <div className="mb-4 h-[360px] overflow-auto rounded-2xl border border-emerald-500/20 bg-black/40 p-4 font-mono text-sm leading-7 text-emerald-200">
-                  {history.length === 0 ? (
-                    <p className="text-emerald-400/70">history cleared</p>
-                  ) : (
-                    history.map((line, idx) => <div key={`${line}-${idx}`}>{line}</div>)
-                  )}
-                </div>
-
-                <form
-                  onSubmit={(e) => {
-                    e.preventDefault()
-                    handleCommand(input)
-                  }}
-                  className="mt-auto rounded-2xl border border-emerald-500/20 bg-black/40 p-4"
-                >
-                  <label className="mb-3 block font-mono text-sm text-emerald-400">
-                    enter command
-                  </label>
-                  <div className="flex flex-col gap-3 sm:flex-row">
-                    <div className="flex flex-1 items-center rounded-xl border border-emerald-500/20 bg-black/30 px-4">
-                      <span className="mr-3 font-mono text-emerald-500">$</span>
-                      <input
-                        value={input}
-                        onChange={(e) => setInput(e.target.value)}
-                        placeholder="type help"
-                        className="w-full bg-transparent py-3 text-emerald-100 outline-none placeholder:text-emerald-400/40"
-                      />
-                    </div>
-                    <button
-                      type="submit"
-                      className="rounded-xl border border-emerald-400 bg-emerald-500/10 px-5 py-3 text-sm font-medium text-emerald-200 transition hover:bg-emerald-500/20"
-                    >
-                      run
-                    </button>
-                  </div>
-                </form>
-              </section>
-            </div>
-          </main>
+          </div>
         </div>
-      </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-6 py-16" id="about">
+        <div className="grid gap-8 md:grid-cols-2">
+          <div className="rounded-3xl bg-white p-8 shadow-sm ring-1 ring-slate-200">
+            <h2 className="text-2xl font-semibold">Short Bio</h2>
+            <p className="mt-4 leading-8 text-slate-600">
+              I like building systems that make technical work more usable, scalable, and collaborative. My background spans robotics leadership, machine learning coursework and projects, research-driven thinking, and data work across public sector and healthcare settings.
+            </p>
+            <p className="mt-4 leading-8 text-slate-600">
+              I’m especially interested in the spaces where engineering, data, and human-centered problem solving meet — whether that means shipping a technical project, organizing a team, or translating messy information into something actionable.
+            </p>
+          </div>
+
+          <div className="rounded-3xl bg-white p-8 shadow-sm ring-1 ring-slate-200">
+            <h2 className="text-2xl font-semibold">Core Skills</h2>
+            <div className="mt-5 flex flex-wrap gap-3">
+              {skills.map((skill) => (
+                <span
+                  key={skill}
+                  className="rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm text-slate-700"
+                >
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-6 py-16" id="projects">
+        <div className="mb-8 flex items-end justify-between gap-4">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
+              Portfolio
+            </p>
+            <h2 className="mt-2 text-3xl font-semibold md:text-4xl">Featured Projects</h2>
+          </div>
+          <p className="max-w-xl text-sm leading-7 text-slate-500">
+            Add live demos for projects that benefit from deployment, and use GitHub links plus screenshots for the rest.
+          </p>
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-2">
+          {featuredProjects.map((project) => (
+            <div
+              key={project.title}
+              className="rounded-3xl bg-white p-7 shadow-sm ring-1 ring-slate-200 transition hover:-translate-y-1"
+            >
+              <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-6 text-sm text-slate-500">
+                Add project screenshot here
+              </div>
+              <p className="mt-6 text-sm font-medium uppercase tracking-wide text-slate-500">
+                {project.subtitle}
+              </p>
+              <h3 className="mt-2 text-2xl font-semibold">{project.title}</h3>
+              <p className="mt-4 leading-8 text-slate-600">{project.description}</p>
+              <div className="mt-5 flex flex-wrap gap-2">
+                {project.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="rounded-full bg-slate-100 px-3 py-1.5 text-xs font-medium text-slate-700"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              <div className="mt-6 flex flex-wrap gap-3">
+                {project.links.map((link) => (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    className="rounded-2xl border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+                  >
+                    {link.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-6 py-16" id="leadership">
+        <div className="grid gap-8 md:grid-cols-[0.9fr_1.1fr]">
+          <div className="rounded-3xl bg-slate-900 p-8 text-white shadow-sm">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-300">
+              Leadership
+            </p>
+            <h2 className="mt-2 text-3xl font-semibold">Experience beyond project work</h2>
+            <p className="mt-4 leading-8 text-slate-300">
+              Highlight leadership roles, organizational impact, mentoring, and major initiatives here.
+            </p>
+          </div>
+
+          <div className="rounded-3xl bg-white p-8 shadow-sm ring-1 ring-slate-200">
+            <ul className="space-y-4">
+              {leadership.map((item) => (
+                <li key={item} className="flex items-start gap-3">
+                  <span className="mt-2 h-2.5 w-2.5 rounded-full bg-slate-900" />
+                  <span className="leading-8 text-slate-700">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-6 py-16" id="resume">
+        <div className="rounded-3xl bg-white p-8 shadow-sm ring-1 ring-slate-200 md:p-10">
+          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
+                Resume
+              </p>
+              <h2 className="mt-2 text-3xl font-semibold">Add your resume and key links</h2>
+            </div>
+            <div className="flex flex-wrap gap-3">
+              <a href="#" className="rounded-2xl bg-slate-900 px-5 py-3 text-sm font-medium text-white">
+                Add Resume PDF
+              </a>
+              <a href="https://github.com/pamelayung" className="rounded-2xl border border-slate-300 px-5 py-3 text-sm font-medium text-slate-700">
+                GitHub
+              </a>
+              <a href="https://www.linkedin.com/in/pamela-yung124/" className="rounded-2xl border border-slate-300 px-5 py-3 text-sm font-medium text-slate-700">
+                LinkedIn
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-6 py-16" id="contact">
+        <div className="rounded-3xl bg-white p-8 shadow-sm ring-1 ring-slate-200 md:p-10">
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
+            Contact
+          </p>
+          <h2 className="mt-2 text-3xl font-semibold">Let’s connect</h2>
+          <p className="mt-4 max-w-2xl leading-8 text-slate-600">
+            Add your preferred email, LinkedIn, and any additional links you want visitors to use when reaching out.
+          </p>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <a href="mailto:your-email@example.com" className="rounded-2xl bg-slate-900 px-5 py-3 text-sm font-medium text-white">
+              your-email@example.com
+            </a>
+            <a href="https://www.linkedin.com/in/pamela-yung124/" className="rounded-2xl border border-slate-300 px-5 py-3 text-sm font-medium text-slate-700">
+              LinkedIn
+            </a>
+            <a href="https://github.com/pamelayung" className="rounded-2xl border border-slate-300 px-5 py-3 text-sm font-medium text-slate-700">
+              GitHub
+            </a>
+          </div>
+        </div>
+      </section>
     </div>
-  )
+  );
 }
