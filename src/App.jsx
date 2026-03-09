@@ -1,18 +1,26 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
 const WORLD_WIDTH = 4200
-const PLAYER_STEP = 32
+const PLAYER_STEP = 22
+const GROUND_Y = 80
+const JUMP_VELOCITY = 18
+const GRAVITY = 0.95
 
 export default function PamelaPortfolioGame() {
   const [playerX, setPlayerX] = useState(140)
-  const [activeZone, setActiveZone] = useState('intro')
+  const [playerY, setPlayerY] = useState(GROUND_Y)
+  const [velocityY, setVelocityY] = useState(0)
+  const [isJumping, setIsJumping] = useState(false)
+  const [facing, setFacing] = useState('right')
+  const [activeZone, setActiveZone] = useState('Intro')
   const [showOverlay, setShowOverlay] = useState(true)
   const [galleryIndex, setGalleryIndex] = useState(0)
+  const animationRef = useRef(null)
 
   const zones = useMemo(
     () => [
       {
-        id: 'intro',
+        id: 'Intro',
         title: 'Start Room',
         x1: 0,
         x2: 520,
@@ -25,7 +33,7 @@ export default function PamelaPortfolioGame() {
               This portfolio is designed like a retro side-scrolling game. Each room highlights a different part of my work.
             </p>
             <div className="grid gap-3 sm:grid-cols-2">
-              <InfoCard label="Controls" value="Arrow keys or A / D" />
+              <InfoCard label="Controls" value="Arrow keys, A / D, and Spacebar" />
               <InfoCard label="Goal" value="Walk through rooms" />
               <InfoCard label="Explore" value="Projects, experience, leadership" />
               <InfoCard label="Bonus" value="Gallery + resume room" />
@@ -34,7 +42,7 @@ export default function PamelaPortfolioGame() {
         ),
       },
       {
-        id: 'projects',
+        id: 'Projects',
         title: 'Projects Room',
         x1: 520,
         x2: 1220,
@@ -66,7 +74,7 @@ export default function PamelaPortfolioGame() {
         ),
       },
       {
-        id: 'experience',
+        id: 'Experience',
         title: 'Experience Room',
         x1: 1220,
         x2: 1980,
@@ -88,7 +96,7 @@ export default function PamelaPortfolioGame() {
         ),
       },
       {
-        id: 'leadership',
+        id: 'Leadership',
         title: 'Leadership Room',
         x1: 1980,
         x2: 2750,
@@ -110,7 +118,7 @@ export default function PamelaPortfolioGame() {
         ),
       },
       {
-        id: 'gallery',
+        id: 'Gallery',
         title: 'Gallery Room',
         x1: 2750,
         x2: 3450,
@@ -142,7 +150,7 @@ export default function PamelaPortfolioGame() {
         ),
       },
       {
-        id: 'resume',
+        id: 'Resume',
         title: 'Resume + Contact Room',
         x1: 3450,
         x2: WORLD_WIDTH,
@@ -185,9 +193,9 @@ export default function PamelaPortfolioGame() {
               </a>
             </div>
             <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-              <p className="text-sm text-slate-600">Replace the email below with your preferred contact.</p>
-              <a href="mailto:your-email@example.com" className="mt-2 inline-block text-slate-900 underline">
-                your-email@example.com
+              <p className="text-sm text-slate-600">My email:</p>
+              <a href="mailto:ppyung@ucsd.edu" className="mt-2 inline-block text-slate-900 underline">
+                ppyung@ucsd.edu
               </a>
             </div>
           </div>
@@ -203,20 +211,55 @@ export default function PamelaPortfolioGame() {
   }, [playerX, zones])
 
   useEffect(() => {
+    function tick() {
+      setPlayerY((prevY) => {
+        const nextY = prevY + velocityY
+        if (nextY >= GROUND_Y) {
+          if (isJumping) {
+            setIsJumping(false)
+            setVelocityY(0)
+          }
+          return GROUND_Y
+        }
+        return nextY
+      })
+
+      setVelocityY((prev) => {
+        if (!isJumping && playerY >= GROUND_Y) return 0
+        return prev + GRAVITY
+      })
+
+      animationRef.current = requestAnimationFrame(tick)
+    }
+
+    animationRef.current = requestAnimationFrame(tick)
+    return () => {
+      if (animationRef.current) cancelAnimationFrame(animationRef.current)
+    }
+  }, [velocityY, isJumping, playerY])
+
+  useEffect(() => {
     function onKeyDown(e) {
       if (['ArrowRight', 'd', 'D'].includes(e.key)) {
+        setFacing('right')
         setPlayerX((prev) => Math.min(WORLD_WIDTH - 80, prev + PLAYER_STEP))
         setShowOverlay(true)
       }
       if (['ArrowLeft', 'a', 'A'].includes(e.key)) {
+        setFacing('left')
         setPlayerX((prev) => Math.max(40, prev - PLAYER_STEP))
         setShowOverlay(true)
+      }
+      if ((e.key === ' ' || e.code === 'Space') && !isJumping && playerY >= GROUND_Y) {
+        e.preventDefault()
+        setIsJumping(true)
+        setVelocityY(-JUMP_VELOCITY)
       }
     }
 
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
-  }, [])
+  }, [isJumping, playerY])
 
   const currentZone = zones.find((zone) => zone.id === activeZone) || zones[0]
   const cameraX = Math.max(0, Math.min(playerX - 420, WORLD_WIDTH - 1100))
@@ -231,7 +274,13 @@ export default function PamelaPortfolioGame() {
           </div>
           <div className="flex flex-wrap gap-2">
             <button
-              onClick={() => setPlayerX(140)}
+              onClick={() => {
+                setPlayerX(140)
+                setPlayerY(GROUND_Y)
+                setVelocityY(0)
+                setIsJumping(false)
+                setFacing('right')
+              }}
               className="rounded-xl border border-white/40 bg-white/20 px-4 py-2 text-sm font-semibold text-black hover:bg-white/30"
             >
               Restart
@@ -248,7 +297,7 @@ export default function PamelaPortfolioGame() {
         <div className="grid min-h-[calc(100vh-120px)] gap-6 xl:grid-cols-[1.45fr_0.55fr]">
           <div className="overflow-hidden rounded-3xl border border-white/10 bg-slate-900 shadow-2xl shadow-black/30">
             <div className="border-b border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-200">
-              Use ← → or A / D to move through the world.
+              Use ← → or A / D to move. Press Space to jump.
             </div>
 
             <div className="relative h-[560px] overflow-hidden bg-gradient-to-b from-sky-300 via-cyan-200 to-emerald-100">
@@ -298,15 +347,31 @@ export default function PamelaPortfolioGame() {
                 ))}
 
                 <div
-                  className="absolute bottom-20 transition-all duration-150"
-                  style={{ left: `${playerX}px` }}
+                  className="absolute transition-all duration-100"
+                  style={{
+                    left: `${playerX}px`,
+                    bottom: `${playerY}px`,
+                    transform: facing === 'left' ? 'scaleX(-1)' : 'none',
+                  }}
                 >
                   <div className="relative">
-                    <div className="absolute -top-7 left-1/2 -translate-x-1/2 rounded-full bg-black/70 px-3 py-1 text-xs font-medium text-white">
+                    <div
+                      className="absolute -top-8 left-1/2 rounded-full bg-black/70 px-3 py-1 text-xs font-medium text-white"
+                      style={{ transform: facing === 'left' ? 'translateX(50%) scaleX(-1)' : 'translateX(-50%)' }}
+                    >
                       Pamela
                     </div>
-                    <div className="h-20 w-16 rounded-t-[1.5rem] rounded-b-xl border-4 border-slate-900 bg-rose-300" />
-                    <div className="absolute bottom-0 left-1 -z-10 h-4 w-14 rounded-full bg-black/20 blur-md" />
+                    <div className="relative h-24 w-28">
+                      <div className="absolute bottom-1 left-3 h-12 w-16 rounded-[2rem] border-4 border-slate-900 bg-emerald-400" />
+                      <div className="absolute bottom-10 left-10 h-12 w-12 rounded-[1.5rem] border-4 border-slate-900 bg-emerald-400" />
+                      <div className="absolute bottom-18 left-18 h-5 w-5 rounded-full border-4 border-slate-900 bg-emerald-400" />
+                      <div className="absolute bottom-22 left-22 h-2.5 w-2.5 rounded-full bg-slate-900" />
+                      <div className="absolute bottom-8 left-0 h-5 w-8 rounded-l-full rounded-r-2xl border-4 border-slate-900 bg-emerald-400" />
+                      <div className="absolute bottom-0 left-7 h-7 w-4 rounded-b-xl border-4 border-slate-900 bg-emerald-500" />
+                      <div className="absolute bottom-0 left-16 h-7 w-4 rounded-b-xl border-4 border-slate-900 bg-emerald-500" />
+                      <div className="absolute bottom-12 left-20 h-3 w-8 rounded-full border-4 border-slate-900 bg-emerald-300" />
+                    </div>
+                    <div className="absolute bottom-0 left-2 -z-10 h-4 w-20 rounded-full bg-black/20 blur-md" />
                   </div>
                 </div>
               </div>
@@ -321,9 +386,9 @@ export default function PamelaPortfolioGame() {
             </div>
 
             {showOverlay && (
-              <div className="rounded-3xl border border-white/10 bg-white p-6 text-slate-900 shadow-xl shadow-black/20">
+              <div className="rounded-3xl border border-white/10 bg-slate-800 p-6 text-white shadow-xl shadow-black/20">
                 <div className="mb-4 flex items-center justify-between gap-3">
-                  <p className="text-xs uppercase tracking-[0.25em] text-slate-700">Room Details</p>
+                  <p className="text-xs uppercase tracking-[0.25em] text-slate-300">Room Details</p>
                   <div className="flex flex-wrap gap-2">
                     {zones.map((zone) => (
                       <button
@@ -332,9 +397,9 @@ export default function PamelaPortfolioGame() {
                           setPlayerX(zone.x1 + 120)
                           setShowOverlay(true)
                         }}
-                        className={`rounded-full px-3 py-1 text-xs font-medium transition ${
+                        className={`rounded-full px-3 py-1 text-sm font-semibold transition ${
                           zone.id === activeZone
-                            ? 'bg-slate-900 text-white'
+                            ? 'bg-blue-800 text-white shadow-md'
                             : 'bg-slate-200 text-black hover:bg-slate-300'
                         }`}
                       >
@@ -355,9 +420,9 @@ export default function PamelaPortfolioGame() {
 
 function InfoCard({ label, value }) {
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white/70 p-4">
-      <p className="text-xs uppercase tracking-[0.2em] text-slate-500">{label}</p>
-      <p className="mt-2 font-medium text-slate-900">{value}</p>
+    <div className="rounded-2xl border border-slate-600/30 bg-slate-700/40 p-4">
+      <p className="text-xs uppercase tracking-[0.2em] text-slate-300">{label}</p>
+      <p className="mt-2 font-medium text-white">{value}</p>
     </div>
   )
 }
