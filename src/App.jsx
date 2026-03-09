@@ -153,7 +153,7 @@ export default function PamelaPortfolioGame() {
           <div className="space-y-5">
             <div className="flex flex-wrap gap-3">
               <a
-                href="/portfolio/pamela_yung_resume.pdf"
+                href="/portfolio/PamelaYung_Resume.pdf"
                 target="_blank"
                 rel="noreferrer"
                 className="rounded-2xl bg-slate-900 px-4 py-3 text-sm font-medium text-white"
@@ -161,7 +161,7 @@ export default function PamelaPortfolioGame() {
                 View Resume
               </a>
               <a
-                href="/portfolio/pamela_yung_resume.pdf"
+                href="/portfolio/PamelaYung_Resume.pdf"
                 download
                 className="rounded-2xl border border-slate-300 px-4 py-3 text-sm font-medium text-slate-700"
               >
