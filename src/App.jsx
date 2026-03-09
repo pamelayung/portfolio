@@ -232,13 +232,13 @@ export default function PamelaPortfolioGame() {
           <div className="flex flex-wrap gap-2">
             <button
               onClick={() => setPlayerX(140)}
-              className="rounded-xl border border-slate-600 bg-slate-800 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-700"
+              className="rounded-xl border border-white/40 bg-white/20 px-4 py-2 text-sm font-semibold text-black hover:bg-white/30"
             >
               Restart
             </button>
             <button
               onClick={() => setShowOverlay((prev) => !prev)}
-              className="rounded-xl border border-slate-600 bg-slate-800 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-700"
+              className="rounded-xl border border-white/40 bg-white/20 px-4 py-2 text-sm font-semibold text-black hover:bg-white/30"
             >
               {showOverlay ? 'Hide Panel' : 'Show Panel'}
             </button>
@@ -332,10 +332,11 @@ export default function PamelaPortfolioGame() {
                           setPlayerX(zone.x1 + 120)
                           setShowOverlay(true)
                         }}
+                        
                         className={`rounded-full px-3 py-1 text-xs font-medium transition ${
                           zone.id === activeZone
-                            ? 'bg-slate-600 text-white'
-                            : 'bg-slate-200 text-slate-900 hover:bg-slate-300'
+                            ? 'bbg-slate-900 text-white'
+                            : 'bg-slate-200 text-black hover:bg-slate-300'
                         }`}
                       >
                         {zone.id}
