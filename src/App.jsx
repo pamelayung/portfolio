@@ -359,7 +359,7 @@ export default function PamelaPortfolioGame() {
                       className="absolute -top-8 left-1/2 rounded-full bg-black/70 px-3 py-1 text-xs font-medium text-white"
                       style={{ transform: facing === 'left' ? 'translateX(50%) scaleX(-1)' : 'translateX(-50%)' }}
                     >
-                      Pamela
+                      You
                     </div>
                     <div className="relative h-24 w-28">
                       <div className="absolute bottom-1 left-3 h-12 w-16 rounded-[2rem] border-4 border-slate-900 bg-emerald-400" />
