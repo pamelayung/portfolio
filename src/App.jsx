@@ -232,13 +232,13 @@ export default function PamelaPortfolioGame() {
           <div className="flex flex-wrap gap-2">
             <button
               onClick={() => setPlayerX(140)}
-              className="rounded-xl border border-white/40 bg-white/20 px-4 py-2 text-sm font-semibold text-white hover:bg-white/30"
+              className="rounded-xl border border-slate-600 bg-slate-800 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-700"
             >
               Restart
             </button>
             <button
               onClick={() => setShowOverlay((prev) => !prev)}
-              className="rounded-xl border border-white/40 bg-white/20 px-4 py-2 text-sm font-semibold text-white hover:bg-white/30"
+              className="rounded-xl border border-slate-600 bg-slate-800 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-700"
             >
               {showOverlay ? 'Hide Panel' : 'Show Panel'}
             </button>
